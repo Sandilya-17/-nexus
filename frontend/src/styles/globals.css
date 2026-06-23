@@ -1,0 +1,279 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Brand — WhatsApp teal/green */
+    --accent:        #00a884;
+    --accent-bright: #06cf9c;
+    --accent-dim:    rgba(0,168,132,0.15);
+    --accent-glow:   rgba(0,168,132,0.35);
+
+    /* Surfaces — WhatsApp dark mode palette */
+    --bg-app:        #0b141a;
+    --bg-sidebar:    #111b21;
+    --bg-panel:      #202c33;
+    --bg-card:       #233138;
+    --bg-hover:      #2a3942;
+    --bg-input:      #2a3942;
+    --bg-message-out:#005c4b;
+    --bg-message-in: #202c33;
+    --bg-chat:       #0b141a;
+
+    /* Borders */
+    --border:        rgba(255,255,255,0.07);
+    --border-focus:  rgba(0,168,132,0.6);
+
+    /* Text */
+    --text-1:        #e9edef;
+    --text-2:        #8696a0;
+    --text-3:        #667781;
+
+    /* Semantic */
+    --green:   #00a884;
+    --red:     #ef4444;
+    --amber:   #f59e0b;
+
+    /* Scrollbar */
+    --scroll:  #2a3942;
+
+    /* Legacy aliases (kept for components referencing older var names) */
+    --text-muted:     var(--text-2);
+    --text-primary:   var(--text-1);
+    --text-secondary: var(--text-2);
+    --bg-main:        var(--bg-sidebar);
+    --online:         var(--accent);
+    --message-in:     var(--bg-message-in);
+    --message-out:    var(--bg-message-out);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body, #root {
+    height: 100%;
+    overflow: hidden;
+    background: var(--bg-app);
+    color: var(--text-1);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,h2,h3,h4 { font-family: 'Inter', sans-serif; letter-spacing: -0.01em; }
+
+  ::-webkit-scrollbar { width: 3px; height: 3px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--scroll); border-radius: 999px; }
+  ::-webkit-scrollbar-thumb:hover { background: #3a3c50; }
+
+  ::selection { background: var(--accent-glow); color: white; }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+}
+
+@layer components {
+
+  /* ── Buttons ─────────────────────────────────── */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 font-medium
+           transition-all duration-150 cursor-pointer select-none
+           active:scale-[0.97] disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+  .btn-primary {
+    @apply btn px-4 py-2.5 rounded-xl text-white text-sm;
+    background: var(--accent);
+  }
+  .btn-primary:hover {
+    filter: brightness(1.08);
+  }
+  .btn-ghost {
+    @apply btn px-3 py-2 rounded-xl text-[var(--text-2)]
+           hover:bg-[var(--bg-hover)] hover:text-[var(--text-1)];
+  }
+  .btn-icon {
+    @apply btn w-9 h-9 rounded-xl text-[var(--text-2)]
+           hover:bg-[var(--bg-hover)] hover:text-[var(--text-1)];
+  }
+  .btn-danger {
+    @apply btn px-4 py-2.5 rounded-xl text-white text-sm
+           bg-red-500/90 hover:bg-red-500;
+  }
+
+  /* ── Inputs ──────────────────────────────────── */
+  .input {
+    @apply w-full text-sm bg-[var(--bg-input)] border border-[var(--border)]
+           rounded-xl px-4 py-3 text-[var(--text-1)]
+           placeholder:text-[var(--text-3)]
+           focus:outline-none focus:border-[var(--border-focus)]
+           focus:ring-2 focus:ring-[var(--accent-dim)]
+           transition-all duration-200;
+  }
+  .input-field { @apply input; }
+
+  /* ── Cards ───────────────────────────────────── */
+  .card {
+    @apply bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl;
+  }
+  .panel {
+    @apply bg-[var(--bg-panel)] border border-[var(--border)] rounded-2xl;
+  }
+
+  /* ── Sidebar nav item ────────────────────────── */
+  .nav-item {
+    @apply relative w-10 h-10 flex items-center justify-center
+           rounded-xl transition-all duration-150 cursor-pointer
+           text-[var(--text-3)] hover:text-[var(--text-1)] hover:bg-[var(--bg-hover)];
+  }
+  .nav-item-active {
+    @apply bg-[var(--accent-dim)] text-[var(--accent-bright)];
+  }
+  .sidebar-item {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-xl cursor-pointer
+           hover:bg-[var(--bg-hover)] transition-all duration-150 select-none;
+  }
+  .sidebar-item-active {
+    @apply bg-[var(--accent-dim)] border border-[var(--accent)]/20;
+  }
+
+  /* ── Messages ────────────────────────────────── */
+  .message-bubble-out {
+    @apply bg-[var(--bg-message-out)] text-[var(--text-1)]
+           rounded-lg rounded-tr-none px-2.5 py-[6px] max-w-[78%] text-[14.2px] leading-[19px];
+  }
+  .message-bubble-in {
+    @apply bg-[var(--bg-message-in)] text-[var(--text-1)]
+           rounded-lg rounded-tl-none px-2.5 py-[6px] max-w-[78%] text-[14.2px] leading-[19px];
+  }
+
+  /* ── Badge ───────────────────────────────────── */
+  .badge {
+    @apply text-white text-[10px] font-bold rounded-full
+           min-w-[18px] h-[18px] flex items-center justify-center px-1;
+    background: var(--accent);
+  }
+
+  /* ── Online dot ──────────────────────────────── */
+  .online-dot {
+    @apply w-2.5 h-2.5 rounded-full border-2 border-[var(--bg-sidebar)];
+    background: var(--green);
+    box-shadow: 0 0 6px rgba(0,168,132,0.6);
+  }
+
+  /* ── Glass ───────────────────────────────────── */
+  .glass {
+    backdrop-filter: blur(16px) saturate(1.4);
+    background: rgba(14,15,19,0.75);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  /* ── Divider ─────────────────────────────────── */
+  .divider {
+    @apply w-full border-t border-[var(--border)];
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hide-scrollbar::-webkit-scrollbar { display: none; }
+  .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .glow-accent {
+    box-shadow: 0 0 24px var(--accent-glow);
+  }
+}
+
+/* Message tails (WhatsApp-style, top corner) */
+.msg-out::after {
+  content: '';
+  position: absolute;
+  right: -8px; top: 0;
+  width: 8px; height: 13px;
+  background: var(--bg-message-out);
+  clip-path: polygon(0 0, 0 100%, 100% 0);
+}
+.msg-in::after {
+  content: '';
+  position: absolute;
+  left: -8px; top: 0;
+  width: 8px; height: 13px;
+  background: var(--bg-message-in);
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+}
+
+/* WhatsApp chat wallpaper (subtle doodle pattern, dark mode) */
+.wa-wallpaper {
+  background-color: var(--bg-chat);
+  background-image:
+    radial-gradient(circle at 8% 12%, rgba(255,255,255,0.025) 0, transparent 35%),
+    radial-gradient(circle at 32% 68%, rgba(255,255,255,0.02) 0, transparent 30%),
+    radial-gradient(circle at 68% 22%, rgba(255,255,255,0.025) 0, transparent 32%),
+    radial-gradient(circle at 88% 78%, rgba(255,255,255,0.02) 0, transparent 30%),
+    radial-gradient(circle at 50% 45%, rgba(255,255,255,0.015) 0, transparent 40%);
+  background-size: 420px 420px;
+  background-repeat: repeat;
+}
+
+/* Animations */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes pulse-ring {
+  0%,100% { opacity: 0.4; transform: scale(1); }
+  50%      { opacity: 0.8; transform: scale(1.08); }
+}
+.animate-fade-in-up { animation: fade-in-up 0.25s ease both; }
+.animate-fade-in    { animation: fade-in    0.2s  ease both; }
+.animate-scale-in   { animation: scale-in   0.2s  ease both; }
+.animate-pulse-ring { animation: pulse-ring 2s    ease infinite; }
+.animate-slide-up   { animation: fade-in-up 0.2s  ease both; }
+.animate-bounce-in  { animation: scale-in   0.25s cubic-bezier(0.34,1.56,0.64,1) both; }
+
+/* Typing dots */
+.typing-dot {
+  width: 6px; height: 6px;
+  background: var(--text-2);
+  border-radius: 50%;
+  animation: typing-bounce 1.2s ease infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typing-bounce {
+  0%,80%,100% { transform: translateY(0); opacity: 0.5; }
+  40%          { transform: translateY(-5px); opacity: 1; }
+}
+
+/* PWA / mobile */
+@media (display-mode: standalone) {
+  body { padding-top: env(safe-area-inset-top); }
+}
+@supports (-webkit-touch-callout: none) {
+  .h-full { height: -webkit-fill-available; }
+}
